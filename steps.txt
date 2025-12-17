@@ -1,0 +1,20 @@
+Created portfolio-tracker/
+
+Created python virtual environment
+$ python -m venv venv
+
+Activated virtual environment
+$ venv\Scripts\Activate
+
+install dependencies
+$ pip install sqlalchemy
+$ pip install fastapi
+
+lightweight high-performance web server for python applications:
+$ pip install uvicorn
+
+
+$ pip install pydantic[email]
+$ pip install 
+$ pip install "bcrypt<4.0"
+$ pip install "passlib[bcrypt]==1.7.4"
