@@ -6,3 +6,5 @@ python-jose==3.5.0
 passlib[bcrypt]==1.7.4
 bcrypt==3.2.2
 httpx==0.28.1
+apscheduler==3.11.1
+pytz==2025.2

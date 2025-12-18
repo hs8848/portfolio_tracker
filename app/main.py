@@ -9,6 +9,7 @@ from .schemas import InstrumentCreate, InstrumentResponse, HoldingCreate, Holdin
 from .auth import hash_password, verify_password, create_access_token, get_current_user
 
 from .services.price_service import refresh_prices
+from .services.scheduler import start_scheduler
 
 Base.metadata.create_all(bind=engine)
 
@@ -106,3 +107,8 @@ def get_holdings(current_user: User = Depends(get_current_user), db: Session = D
 def refresh_prices_api(current_user: User = Depends(get_current_user)):
     refresh_prices()
     return {"message": "Prices refreshed"}
+
+
+@app.on_event("startup")
+def startup_event():
+    start_scheduler()
