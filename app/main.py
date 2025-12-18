@@ -1,8 +1,14 @@
 from fastapi import FastAPI, Depends, HTTPException
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
+from fastapi import Request
+
 from sqlalchemy.orm import Session
+from sqlalchemy import func
+from datetime import datetime, timezone, date
 
 from .database import engine, SessionLocal
-from .models import Base, User, InstrumentType, Instrument, Holding
+from .models import Base, User, Instrument, Holding, PortfolioValuation
 from .schemas import UserCreate, UserLogin, Token
 from .schemas import InstrumentCreate, InstrumentResponse, HoldingCreate, HoldingResponse
 
@@ -10,12 +16,16 @@ from .auth import hash_password, verify_password, create_access_token, get_curre
 
 from .services.price_service import refresh_prices
 from .services.valuation_service import run_eod_valuation
-from datetime import datetime, timezone
+
+
+
 #from .services.scheduler import start_scheduler
 
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="Portfolio Tracker API")
+app.mount("/static", StaticFiles(directory="app/static"), name="static")
+templates = Jinja2Templates(directory="app/templates")
 
 def get_db():
     db = SessionLocal()
@@ -115,6 +125,58 @@ def refresh_prices_api(current_user: User = Depends(get_current_user)):
 def run_eod_manual(current_user: User = Depends(get_current_user)):
     run_eod_valuation(datetime.now(timezone.utc))
     return {"message": "EOD valuation executed."}
+
+
+def get_total_on_date(db, user_id, val_date):
+    return (
+        db.query(func.sum(PortfolioValuation.valuation))
+        .filter(
+            PortfolioValuation.user_id == user_id,
+            func.date(PortfolioValuation.val_date) == val_date
+        )
+        .scalar() or 0
+    )
+
+
+@app.get("/dashboard/summary")
+def portfolio_summary(
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    today = date.today()
+
+    latest_date = (
+        db.query(func.max(PortfolioValuation.val_date))
+        .filter(PortfolioValuation.user_id == current_user.id)
+        .scalar()
+    )
+
+    if not latest_date:
+        return {"total": 0}
+
+    total = (
+        db.query(func.sum(PortfolioValuation.valuation))
+        .filter(
+            PortfolioValuation.user_id == current_user.id,
+            PortfolioValuation.val_date == latest_date
+        )
+        .scalar()
+    )
+
+    return {
+        "as_of_date": latest_date,
+        "total_value": round(total, 2)
+    }
+
+
+@app.get("/")
+def login_page(request: Request):
+    return templates.TemplateResponse("index.html", {"request": request})
+
+
+@app.get("/dashboard")
+def dashboard_page(request: Request):
+    return templates.TemplateResponse("dashboard.html", {"request": request})
 
 
 # Scheduler disabled during development.

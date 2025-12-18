@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Portfolio Dashboard</title>
+  <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body onload="loadDashboard()">
+
+  <h2>Dashboard</h2>
+  <button onclick="logout()">Logout</button>
+  <button onclick="refreshPrices()">Refresh Prices</button>
+
+  <h3>Total Portfolio Value</h3>
+  <div id="totalValue">Loading...</div>
+
+  <h3>MF Allocation by Category</h3>
+  <ul id="mfByClass"></ul>
+
+  <script src="/static/js/api.js"></script>
+  <script src="/static/js/auth.js"></script>
+  <script src="/static/js/dashboard.js"></script>
+</body>
+</html>
