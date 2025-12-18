@@ -1,5 +1,10 @@
+console.log("dashboard.js loaded");
+
 async function loadDashboard() {
   const summary = await authFetch("/dashboard/summary").then(r => r.json());
+  
+  console.log("Dashboard Summary:", summary);
+
   document.getElementById("totalValue").innerText =
     "₹ " + summary.total_value;
 }

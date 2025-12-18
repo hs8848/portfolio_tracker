@@ -17,7 +17,7 @@ from .auth import hash_password, verify_password, create_access_token, get_curre
 from .services.price_service import refresh_prices
 from .services.valuation_service import run_eod_valuation
 
-
+from .dashboard import get_total_on_date, get_total_by_inst_type, get_total_by_mf_class, get_total_by_mf_amc
 
 #from .services.scheduler import start_scheduler
 
@@ -127,17 +127,6 @@ def run_eod_manual(current_user: User = Depends(get_current_user)):
     return {"message": "EOD valuation executed."}
 
 
-def get_total_on_date(db, user_id, val_date):
-    return (
-        db.query(func.sum(PortfolioValuation.valuation))
-        .filter(
-            PortfolioValuation.user_id == user_id,
-            func.date(PortfolioValuation.val_date) == val_date
-        )
-        .scalar() or 0
-    )
-
-
 @app.get("/dashboard/summary")
 def portfolio_summary(
     current_user: User = Depends(get_current_user),
@@ -154,19 +143,25 @@ def portfolio_summary(
     if not latest_date:
         return {"total": 0}
 
-    total = (
-        db.query(func.sum(PortfolioValuation.valuation))
-        .filter(
-            PortfolioValuation.user_id == current_user.id,
-            PortfolioValuation.val_date == latest_date
-        )
-        .scalar()
-    )
+    print(f"Latest valuation date: {latest_date}, Current user ID: {current_user.id}")
+    total = get_total_on_date(db, current_user.id, latest_date.date())
+    print(f"Total returned = {total}")
+    total_by_inst_type = get_total_by_inst_type(db, current_user.id, latest_date)
+    total_by_mf_class = get_total_by_mf_class(db, current_user.id, latest_date)
+    total_by_mf_amc = get_total_by_mf_amc(db, current_user.id, latest_date)
 
     return {
         "as_of_date": latest_date,
         "total_value": round(total, 2)
     }
+
+    # return {
+    #     "as_of_date": latest_date,
+    #     "total_value": round(total, 2),
+    #     "by_inst_type": total_by_inst_type,
+    #     "by_mf_class": total_by_mf_class,
+    #     "by_mf_amc": total_by_mf_amc
+    # }
 
 
 @app.get("/")
