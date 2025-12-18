@@ -21,7 +21,7 @@ def get_db():
 
 @app.post("/users", response_model=dict)
 def create_user(user: UserCreate, db: Session = Depends(get_db)):
-    print("Pwd length check: "+ str(len(user.password.encode("utf-8"))) +". Thank You.")
+    
     existing = db.query(User).filter(User.email == user.email).first()
     if existing:
         raise HTTPException(status_code=400, detail="User already exists")
@@ -39,6 +39,7 @@ def create_user(user: UserCreate, db: Session = Depends(get_db)):
 
 @app.post("/login", response_model=Token)
 def login(user: UserLogin, db: Session = Depends(get_db)):
+    
     db_user = db.query(User).filter(User.email == user.email).first()
 
     if not db_user or not verify_password(user.password, db_user.password_hash):

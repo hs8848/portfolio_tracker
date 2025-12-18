@@ -18,3 +18,10 @@ $ pip install pydantic[email]
 $ pip install 
 $ pip install "bcrypt<4.0"
 $ pip install "passlib[bcrypt]==1.7.4"
+
+Accessing SQL Lite DB:
+Go to the directory where the portfolio.db is placed:
+$ sqlite3 portfolio.db
+
+Starting uvicorn server:
+$ uvicorn app.main:app --reload
