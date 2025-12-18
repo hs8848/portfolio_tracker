@@ -2,8 +2,10 @@ from fastapi import FastAPI, Depends, HTTPException
 from sqlalchemy.orm import Session
 
 from .database import engine, SessionLocal
-from .models import Base, User
+from .models import Base, User, InstrumentType, Instrument, Holding, Price, PortfolioValuation
 from .schemas import UserCreate, UserLogin, Token
+from .schemas import InstrumentCreate, InstrumentResponse, HoldingCreate, HoldingResponse
+
 from .auth import hash_password, verify_password, create_access_token, get_current_user
 
 
@@ -51,3 +53,50 @@ def login(user: UserLogin, db: Session = Depends(get_db)):
 @app.get("/me")
 def read_current_user(current_user: str = Depends(get_current_user)):
     return {"email": current_user}
+
+
+@app.post("/instruments", response_model=InstrumentResponse)
+def create_instrument(instrument: InstrumentCreate, db: Session = Depends(get_db)):
+    new_inst = Instrument(**instrument.dict())
+    db.add(new_inst)
+    db.commit()
+    db.refresh(new_inst)
+    return new_inst
+
+@app.get("/instruments", response_model=list[InstrumentResponse])
+def list_instruments(db: Session = Depends(get_db)):
+    return db.query(Instrument).all()
+
+
+@app.post("/holdings", response_model=dict)
+def add_holding(holding: HoldingCreate, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+    new_holding = Holding(
+        user_id=current_user.id,
+        instrument_id=holding.instrument_id,
+        quantity=holding.quantity,
+        avg_cost_price=holding.avg_cost_price
+    )
+    db.add(new_holding)
+    db.commit()
+    return {"message": "Holding added"}
+
+
+@app.get("/holdings", response_model=list[HoldingResponse])
+def get_holdings(current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+    holdings = (
+        db.query(Holding)
+        .join(Instrument)
+        .filter(Holding.user_id == current_user.id)
+        .all()
+    )
+
+    return [
+        {
+            "id": h.id,
+            "instrument_id": h.instrument.id,
+            "instrument_name": h.instrument.name,
+            "quantity": h.quantity,
+            "avg_cost_price": h.avg_cost_price
+        }
+        for h in holdings
+    ]
