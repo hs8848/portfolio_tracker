@@ -10,6 +10,8 @@ from .auth import hash_password, verify_password, create_access_token, get_curre
 
 from .services.price_service import refresh_prices
 from .services.scheduler import start_scheduler
+from .services.valuation_service import run_eod_valuation
+from datetime import datetime, timezone
 
 Base.metadata.create_all(bind=engine)
 
@@ -109,6 +111,20 @@ def refresh_prices_api(current_user: User = Depends(get_current_user)):
     return {"message": "Prices refreshed"}
 
 
-@app.on_event("startup")
-def startup_event():
-    start_scheduler()
+@app.post("/valuation/run-eod")
+def run_eod_manual(current_user: User = Depends(get_current_user)):
+    run_eod_valuation(datetime.now(timezone.utc))
+    return {"message": "EOD valuation executed."}
+
+
+# Scheduler disabled during development.
+# EOD valuation is triggered manually via API.
+# Enable only in production.
+
+# @app.on_event("startup")
+# def startup_event():
+#     start_scheduler()
+
+# @app.on_event("shutdown")
+# def shutdown_event():
+#     scheduler.shutdown()
