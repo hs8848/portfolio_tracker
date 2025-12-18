@@ -9,9 +9,9 @@ from .schemas import InstrumentCreate, InstrumentResponse, HoldingCreate, Holdin
 from .auth import hash_password, verify_password, create_access_token, get_current_user
 
 from .services.price_service import refresh_prices
-from .services.scheduler import start_scheduler
 from .services.valuation_service import run_eod_valuation
 from datetime import datetime, timezone
+#from .services.scheduler import start_scheduler
 
 Base.metadata.create_all(bind=engine)
 
@@ -127,4 +127,4 @@ def run_eod_manual(current_user: User = Depends(get_current_user)):
 
 # @app.on_event("shutdown")
 # def shutdown_event():
-#     scheduler.shutdown()
+#     shutdown_scheduler()

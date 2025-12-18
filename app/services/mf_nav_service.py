@@ -2,7 +2,6 @@ import httpx
 from datetime import datetime, date, timedelta
 from typing import Tuple
 
-
 MFAPI_BASE_URL = "https://api.mfapi.in/mf"
 
 def fetch_mf_nav(instrument) -> Tuple[float, datetime, str]:
@@ -11,9 +10,7 @@ def fetch_mf_nav(instrument) -> Tuple[float, datetime, str]:
 
     endDate = date.today()
     startDate = endDate - timedelta(days=7)
-    endDateStr = endDate.strftime("%Y-%m-%d")
-    startDateStr = startDate.strftime("%Y-%m-%d")
-    datePartStr = f"?startDate={startDateStr}&endDate={endDateStr}"
+    datePartStr = f"?startDate={startDate.strftime("%Y-%m-%d")}&endDate={endDate.strftime("%Y-%m-%d")}"
     
     url = f"{MFAPI_BASE_URL}/{instrument.ext_id_01}{datePartStr}"
 
