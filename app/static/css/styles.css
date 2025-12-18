@@ -1,0 +1,16 @@
+body {
+  font-family: Calibri;
+  background-color: #4881a4; /* page background color */
+  margin: 40px;
+}
+
+input {
+  display: block;
+  margin: 10px 0;
+}
+
+button {
+  margin-right: 10px;
+}
+
+
