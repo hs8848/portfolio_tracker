@@ -2,12 +2,13 @@ from fastapi import FastAPI, Depends, HTTPException
 from sqlalchemy.orm import Session
 
 from .database import engine, SessionLocal
-from .models import Base, User, InstrumentType, Instrument, Holding, Price, PortfolioValuation
+from .models import Base, User, InstrumentType, Instrument, Holding
 from .schemas import UserCreate, UserLogin, Token
 from .schemas import InstrumentCreate, InstrumentResponse, HoldingCreate, HoldingResponse
 
 from .auth import hash_password, verify_password, create_access_token, get_current_user
 
+from .services.price_service import refresh_prices
 
 Base.metadata.create_all(bind=engine)
 
@@ -100,3 +101,8 @@ def get_holdings(current_user: User = Depends(get_current_user), db: Session = D
         }
         for h in holdings
     ]
+
+@app.post("/prices/refresh", response_model=dict)
+def refresh_prices_api(current_user: User = Depends(get_current_user)):
+    refresh_prices()
+    return {"message": "Prices refreshed"}
