@@ -75,7 +75,6 @@ async function loadDashboard() {
         }
 }
 
-
 async function refreshPrices() {
   await authFetch("/prices/refresh", { method: "POST" });
   alert("Prices refreshed. Re-run EOD valuation if needed.");

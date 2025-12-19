@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <title>Portfolio Tracker - Login</title>
   <link rel="stylesheet" href="/static/css/styles.css">
-  <!--style>
+  <style>
     /* Make body fill the screen and center content */
     body {
       margin: 0;
@@ -12,13 +12,13 @@
       display: flex;
       justify-content: center;   /* horizontal center */
       align-items: center;       /* vertical center */
-      background-color: #f0f4ff; /* page background color */
+      background-color: #6d8196; /* page background color */
       font-family: Arial, sans-serif;
     }
 
     /* Login box */
     .login-box {
-      background: #ffffff;
+      background: #cbcbcb;
       padding: 20px 30px;
       border-radius: 8px;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
@@ -62,11 +62,13 @@
     .login-box button:hover {
       background-color: #0056b3;
     }
-  </style-->
+  </style>
 </head>
 <body>
-    <!--div class="login-box">
-        <h2>Login</h2>
+    <div class="login-box">
+        <h1>Portfolio Tracker</h1> 
+        
+        <h3>Login</h3>
         <form>
             <label for="email">Username</label>
             <input id="email" type="email" placeholder="Email">
@@ -74,20 +76,22 @@
             <label for="password">Password</label>
             <input id="password" type="password" placeholder="Password">
 
-            <button onclick="login()">Login</button>
+            <button type="button" onclick="login()">Login</button>
 
             <p id="error"></p>
         </form>
-    </div-->
+    </div>
 
-    <h2>Login</h2> 
+    <!--h1>Simple Portfolio Tracker</h1> 
+    
+    <h3>Login</h3> 
     
     <input id="email" type="email" placeholder="Email"> 
     <input id="password" type="password" placeholder="Password"> 
     
     <button onclick="login()">Login</button> 
     
-    <p id="error"></p>
+    <p id="error"></p-->
 
     <script src="/static/js/api.js"></script>
     <script src="/static/js/auth.js"></script>
