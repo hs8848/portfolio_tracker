@@ -46,9 +46,10 @@ def refresh_prices():
 
             if inst.type == "MF":
                 price, dt, src = fetch_mf_nav(inst)
+                time.sleep(12)
             elif inst.type == "STOCK":
                 price, dt, src = fetch_stock_price(inst)
-                time.sleep(13)
+                time.sleep(12)
             else:
                 price, dt, src = fetch_bond_price(inst)
 

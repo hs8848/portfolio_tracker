@@ -6,18 +6,35 @@
 </head>
 <body onload="loadDashboard()">
 
-  <h2>Dashboard</h2>
-  <button onclick="logout()">Logout</button>
-  <button onclick="refreshPrices()">Refresh Prices</button>
+  <h2 id="welcomeMsg">Hello</h2>
 
   <h3>Total Portfolio Value</h3>
   <div id="totalValue">Loading...</div>
+  <div id="asOfDate"></div>
 
-  <h3>MF Allocation by Category</h3>
-  <ul id="mfByClass"></ul>
+  <hr>
+
+  <h3>Portfolio Valuation by Instrument Type</h3>
+  <ul id="byInstType"></ul>
+
+  <hr>
+
+  <h3>MF Valuation by MF Class</h3>
+  <ul id="byMfClass"></ul>
+
+  <hr>
+
+  <h3>MF Valuation by AMC</h3>
+  <ul id="byMfAmc"></ul>
+
+  <hr>
+
+  <button onclick="refreshPrices()">Refresh Prices</button>
+  <button onclick="logout()">Logout</button>
 
   <script src="/static/js/api.js"></script>
   <script src="/static/js/auth.js"></script>
   <script src="/static/js/dashboard.js"></script>
 </body>
+
 </html>

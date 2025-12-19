@@ -128,11 +128,15 @@ def run_eod_manual(current_user: User = Depends(get_current_user)):
 
 
 @app.get("/dashboard/summary")
-def portfolio_summary(
-    current_user: User = Depends(get_current_user),
-    db: Session = Depends(get_db)
-):
-    today = date.today()
+def portfolio_summary(current_user: User = Depends(get_current_user),db: Session = Depends(get_db)):
+    
+    return_dict = {"user_name":current_user.name,
+        "as_of_date": None,
+        "total_value": None,
+        "by_inst_type": None,
+        "by_mf_class": None,
+        "by_mf_amc": None
+        }
 
     latest_date = (
         db.query(func.max(PortfolioValuation.val_date))
@@ -141,27 +145,15 @@ def portfolio_summary(
     )
 
     if not latest_date:
-        return {"total": 0}
+        return_dict["total_value"] = 0
+    else:
+        return_dict["as_of_date"] = latest_date.date()
+        return_dict["total_value"] = get_total_on_date(db, current_user.id, latest_date.date())
+        return_dict["by_inst_type"] = get_total_by_inst_type(db, current_user.id, latest_date.date())
+        return_dict["by_mf_class"] = get_total_by_mf_class(db, current_user.id, latest_date.date())
+        return_dict["by_mf_amc"] = get_total_by_mf_amc(db, current_user.id, latest_date.date())
 
-    print(f"Latest valuation date: {latest_date}, Current user ID: {current_user.id}")
-    total = get_total_on_date(db, current_user.id, latest_date.date())
-    print(f"Total returned = {total}")
-    total_by_inst_type = get_total_by_inst_type(db, current_user.id, latest_date)
-    total_by_mf_class = get_total_by_mf_class(db, current_user.id, latest_date)
-    total_by_mf_amc = get_total_by_mf_amc(db, current_user.id, latest_date)
-
-    return {
-        "as_of_date": latest_date,
-        "total_value": round(total, 2)
-    }
-
-    # return {
-    #     "as_of_date": latest_date,
-    #     "total_value": round(total, 2),
-    #     "by_inst_type": total_by_inst_type,
-    #     "by_mf_class": total_by_mf_class,
-    #     "by_mf_amc": total_by_mf_amc
-    # }
+    return return_dict
 
 
 @app.get("/")
