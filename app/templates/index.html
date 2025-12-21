@@ -1,99 +1,177 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>Portfolio Tracker - Login</title>
-  <link rel="stylesheet" href="/static/css/styles.css">
-  <style>
-    /* Make body fill the screen and center content */
-    body {
-      margin: 0;
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;   /* horizontal center */
-      align-items: center;       /* vertical center */
-      background-color: #6d8196; /* page background color */
-      font-family: Arial, sans-serif;
-    }
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Login Page - Portfolio Tracker</title>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Roboto:400,700"
+    />
+    <!-- https://fonts.google.com/specimen/Open+Sans -->
+    <link rel="stylesheet" href="/static/css/fontawesome.min.css" />
+    <!-- https://fontawesome.com/ -->
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css" />
+    <!-- https://getbootstrap.com/ -->
+    <link rel="stylesheet" href="/static/css/templatemo-style.css">
+    <!--
+	Product Admin CSS Template
+	https://templatemo.com/tm-524-product-admin
+	-->
+  </head>
 
-    /* Login box */
-    .login-box {
-      background: #cbcbcb;
-      padding: 20px 30px;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      width: 300px;
-      text-align: center;
-    }
+  <body>
+    <div>
+      <nav class="navbar navbar-expand-xl">
+        <div class="container h-100">
+          <a class="navbar-brand">
+            <h1 class="tm-site-title mb-0">Portfolio Tracker</h1>
+          </a>
+          <button
+            class="navbar-toggler ml-auto mr-0"
+            type="button"
+            data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <i class="fas fa-bars tm-nav-icon"></i>
+          </button>
 
-    .login-box h2 {
-      margin-top: 0;
-      margin-bottom: 20px;
-    }
+          <!--div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mx-auto h-100">
+              <li class="nav-item">
+                <a class="nav-link" href="index.html">
+                  <i class="fas fa-tachometer-alt"></i> Dashboard
+                  <span class="sr-only">(current)</span>
+                </a>
+              </li>
+              <li class="nav-item dropdown">
+                <a
+                  class="nav-link dropdown-toggle"
+                  href="#"
+                  id="navbarDropdown"
+                  role="button"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >
+                  <i class="far fa-file-alt"></i>
+                  <span> Reports <i class="fas fa-angle-down"></i> </span>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <a class="dropdown-item" href="#">Daily Report</a>
+                  <a class="dropdown-item" href="#">Weekly Report</a>
+                  <a class="dropdown-item" href="#">Yearly Report</a>
+                </div>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="products.html">
+                  <i class="fas fa-shopping-cart"></i> Products
+                </a>
+              </li>
 
-    .login-box label {
-      display: block;
-      text-align: left;
-      margin: 8px 0 4px;
-      font-size: 14px;
-    }
-
-    .login-box input[type="email"],
-    .login-box input[type="password"] {
-      width: 100%;
-      padding: 8px;
-      margin-bottom: 12px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      box-sizing: border-box;
-    }
-
-    .login-box button {
-      width: 100%;
-      padding: 10px;
-      border: none;
-      border-radius: 4px;
-      background-color: #007bff;
-      color: white;
-      font-size: 16px;
-      cursor: pointer;
-    }
-
-    .login-box button:hover {
-      background-color: #0056b3;
-    }
-  </style>
-</head>
-<body>
-    <div class="login-box">
-        <h1>Portfolio Tracker</h1> 
-        
-        <h3>Login</h3>
-        <form>
-            <label for="email">Username</label>
-            <input id="email" type="email" placeholder="Email">
-        
-            <label for="password">Password</label>
-            <input id="password" type="password" placeholder="Password">
-
-            <button type="button" onclick="login()">Login</button>
-
-            <p id="error"></p>
-        </form>
+              <li class="nav-item">
+                <a class="nav-link" href="accounts.html">
+                  <i class="far fa-user"></i> Accounts
+                </a>
+              </li>
+              <li class="nav-item dropdown">
+                <a
+                  class="nav-link dropdown-toggle"
+                  href="#"
+                  id="navbarDropdown"
+                  role="button"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >
+                  <i class="fas fa-cog"></i>
+                  <span> Settings <i class="fas fa-angle-down"></i> </span>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <a class="dropdown-item" href="#">Profile</a>
+                  <a class="dropdown-item" href="#">Billing</a>
+                  <a class="dropdown-item" href="#">Customize</a>
+                </div>
+              </li>
+            </ul>
+          </div-->
+        </div>
+      </nav>
     </div>
 
-    <!--h1>Simple Portfolio Tracker</h1> 
-    
-    <h3>Login</h3> 
-    
-    <input id="email" type="email" placeholder="Email"> 
-    <input id="password" type="password" placeholder="Password"> 
-    
-    <button onclick="login()">Login</button> 
-    
-    <p id="error"></p-->
-
+    <div class="container tm-mt-big tm-mb-big">
+      <div class="row">
+        <div class="col-12 mx-auto tm-login-col">
+          <div class="tm-bg-primary-dark tm-block tm-block-h-auto">
+            <div class="row">
+              <div class="col-12 text-center">
+                <h2 class="tm-block-title mb-4">Welcome to Portfolio Tracker</h2>
+              </div>
+            </div>
+            <div class="row mt-2">
+              <div class="col-12">
+                <form action="dashboard.html" method="post" class="tm-login-form">
+                  <div class="form-group">
+                    <label for="username">Username</label>
+                    <input
+                      name="username"
+                      type="email"
+                      class="form-control validate"
+                      id="email"
+                      value=""
+                      required
+                      placeholder="Email"
+                    />
+                  </div>
+                  <div class="form-group mt-3">
+                    <label for="password">Password</label>
+                    <input
+                      name="password"
+                      type="password"
+                      class="form-control validate"
+                      id="password"
+                      value=""
+                      required
+                      placeholder="Password"
+                    />
+                  </div>
+                  <div class="form-group mt-4">
+                    <button
+                      type="button"
+                      onclick="login()"
+                      class="btn btn-primary btn-block text-uppercase"
+                    >
+                      Login
+                    </button>
+                  </div>
+                  <button class="mt-5 btn btn-primary btn-block text-uppercase">
+                    Forgot your password?
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer class="tm-footer row tm-mt-small">
+      <div class="col-12 font-weight-light">
+        <p class="text-center text-white mb-0 px-4 small">
+          Copyright &copy; <b>2026</b> All rights reserved. 
+          
+          Design: <a rel="nofollow noopener" href="https://templatemo.com" class="tm-footer-link">Template Mo</a>
+        </p>
+      </div>
+    </footer>
+    <script src="/static/js/jquery-3.3.1.min.js"></script>
+    <!-- https://jquery.com/download/ -->
+    <script src="/static/js/bootstrap.min.js"></script>
+    <!-- https://getbootstrap.com/ -->
     <script src="/static/js/api.js"></script>
     <script src="/static/js/auth.js"></script>
-</body>
+  </body>
 </html>

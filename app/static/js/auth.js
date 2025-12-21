@@ -1,6 +1,9 @@
 async function login() {
+  console.log("Login function called");
   const email = document.getElementById("email").value;
+  console.log("Email:", email);
   const password = document.getElementById("password").value;
+  console.log("Password:", password);
 
   const res = await fetch("/login", {
     method: "POST",
